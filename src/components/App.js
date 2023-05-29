@@ -4,6 +4,7 @@ import Header from './Header.js';
 import Main from './Main.js';
 import Footer from './Footer.js';
 import PopupWithForm from './PopupWithForm';
+import ImagePopup from './ImagePopup';
 
 function App() { 
   return (
@@ -104,13 +105,7 @@ function App() {
             Сохранить
           </button>
         </PopupWithForm>
-        <div className="popup popup-img">
-          <div className="popup__image container">
-            <img className="popup__photo" src="#" />
-            <h2 className="popup__caption" />
-            <button className="popup__close popup-img__close" type="button" aria-label="закрыть" />
-          </div>
-        </div>
+        <ImagePopup></ImagePopup>
       </div>
   );
 }
