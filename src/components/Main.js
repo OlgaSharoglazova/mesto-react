@@ -1,15 +1,17 @@
+import editAvatar from "../images/pencil.svg"
 function Main({ handleEditAvatarClick, handleEditProfileClick, handleAddPlaceClick }) {
   return (
     <main className="main">
       <section className="profile">
         <div className="profile__info">
-          <div 
-            className="profile__avatar"
-            onClick={handleEditAvatarClick}
-          >
-            <img className="profile__avatar-img" 
-              alt="аватар"
-            />
+          <div className="profile__avatar">
+          <img className="profile__avatar-img" alt="аватар"/>
+            <button
+              className="profile__avatar-button"
+              type="button"
+              onClick={handleEditAvatarClick}>
+                <img className="profile__avatar-pen" alt="карандаш" src={editAvatar} />
+            </button>
           </div>
           <div className="profile__title">
             <div className="profile__name-edit">
