@@ -1,11 +1,28 @@
 import editAvatar from "../images/pencil.svg"
+import { api } from '../utils/api';
+import React from "react";
+
 function Main({ onEditProfile, onAddPlace, onEditAvatar }) {
+  const [userName, setuserName] = React.useState(" ");
+  const [userDescription, setuserDescription] = React.useState(" ");
+  const [userAvatar, setuserAvatar] = React.useState(" ");
+
+  React.useEffect(() => {
+    api.getProfile()
+      .then((dataUser) => {
+        setuserName(dataUser.name);
+        setuserDescription(dataUser.about);
+        setuserAvatar(dataUser.avatar);
+      })
+      .catch((err) => console.log(`Ошибка: ${err}`));
+  }, [])
+
   return (
     <main className="main">
       <section className="profile">
         <div className="profile__info">
           <div className="profile__avatar">
-          <img className="profile__avatar-img" alt="аватар"/>
+          <img className="profile__avatar-img" alt="аватар" style={{ backgroundImage: `url(${userAvatar})` }}/>
             <button
               className="profile__avatar-button"
               type="button"
@@ -15,7 +32,7 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar }) {
           </div>
           <div className="profile__title">
             <div className="profile__name-edit">
-              <h1 className="profile__name">Жак-Ив Кусто</h1>
+              <h1 className="profile__name">{userName}</h1>
               <button 
                 className="button profile__edit-button" 
                 type="button" 
@@ -23,7 +40,7 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar }) {
                 onClick={onEditProfile}
               />
             </div>
-            <p className="profile__profession">Исследователь океана</p>
+            <p className="profile__profession">{userDescription}</p>
           </div>
           </div>
           <button 
