@@ -1,5 +1,6 @@
 
 import '../index.css';
+import React from 'react';
 import Header from './Header.js';
 import Main from './Main.js';
 import Footer from './Footer.js';
@@ -7,26 +8,41 @@ import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
 
 function App() { 
+  const [isEditProfilePopupOpen, setisEditProfilePopupOpen] = React.useState(false);
+  const [isAddPlacePopupOpen, setisAddPlacePopupOpen] = React.useState(false);
+  const [isEditAvatarPopupOpen, setisEditAvatarPopupOpen] = React.useState(false);
+
+  function handleEditProfileClick() {
+    setisEditProfilePopupOpen(true)
+  }
+  function handleAddPlaceClick() {
+    setisAddPlacePopupOpen(true)
+  }
+  function handleEditAvatarClick() {
+    setisEditAvatarPopupOpen(true)
+  }
+  function closeAllPopups() {
+    setisEditProfilePopupOpen(false)
+    setisAddPlacePopupOpen(false)
+    setisEditAvatarPopupOpen(false)
+  }
   return (
     <div className="page">
         <div className="content">
           <Header />
           <Main 
-            handleEditAvatarClick={() => {
-              const popupAvatar = document.querySelector('.popup-avatar')
-              popupAvatar.classList.add('popup_opened')}}
-            handleEditProfileClick={() => {
-              const popupEdit = document.querySelector('.popup-edit')
-              popupEdit.classList.add('popup_opened')
-            }}
-            handleAddPlaceClick={() => {
-              const popupAdd = document.querySelector('.popup-add')
-              popupAdd.classList.add('popup_opened')
-            }}
+            onEditProfile={handleEditProfileClick}
+            onAddPlace={handleAddPlaceClick}
+            onEditAvatar={handleEditAvatarClick}
           />
           <Footer />
         </div>
-        <PopupWithForm title={"Редактировать профиль"} name={"edit"}>
+        <PopupWithForm 
+          title={"Редактировать профиль"} 
+          name={"edit"}
+          isOpen={isEditProfilePopupOpen}
+          onClose={closeAllPopups}
+          >
           <input 
             type="text" 
             id="input-name" 
@@ -55,7 +71,12 @@ function App() {
             Сохранить
           </button>
         </PopupWithForm>
-        <PopupWithForm title={"Новое место"} name={"add"}>
+        <PopupWithForm 
+          title={"Новое место"} 
+          name={"add"}
+          isOpen={isAddPlacePopupOpen}
+          onClose={closeAllPopups}
+          >
           <input 
             type="text" 
             id="input-title" 
@@ -82,14 +103,23 @@ function App() {
             Создать
           </button>
         </PopupWithForm>
-        <PopupWithForm title={"Вы уверены?"} name={"confirm"}>
+        <PopupWithForm 
+          title={"Вы уверены?"} 
+          name={"confirm"}
+          //isOpen={}
+          >
           <button 
             className="button popup__button popup-confirm__button" 
             type="submit">
             Да
           </button>
         </PopupWithForm>
-        <PopupWithForm title={"Обновить аватар"} name={"avatar"}>
+        <PopupWithForm 
+          title={"Обновить аватар"} 
+          name={"avatar"}
+          isOpen={isEditAvatarPopupOpen}
+          onClose={closeAllPopups}
+          >
           <input 
             type="url" 
             id="input-avatar" 

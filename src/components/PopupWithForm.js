@@ -1,6 +1,6 @@
-function PopupWithForm({ title, name, children }) {
+function PopupWithForm({ title, name, children, isOpen, onClose }) {
   return (
-    <div className={`popup popup_type_${name}`}>
+    <div className={`popup popup-${name} ${isOpen ? "popup_opened" : " "}`}>
       <div className="popup__container container">
         <h2 className="popup__title">{title}</h2>
         <form 
@@ -12,7 +12,8 @@ function PopupWithForm({ title, name, children }) {
         <button 
           className={`popup__close popup-${name}__close`} 
           type="button" 
-          aria-label="закрыть" 
+          aria-label="закрыть"
+          onClick={onClose}
         />
       </div>
     </div>

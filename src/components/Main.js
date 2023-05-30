@@ -1,5 +1,5 @@
 import editAvatar from "../images/pencil.svg"
-function Main({ handleEditAvatarClick, handleEditProfileClick, handleAddPlaceClick }) {
+function Main({ onEditProfile, onAddPlace, onEditAvatar }) {
   return (
     <main className="main">
       <section className="profile">
@@ -9,7 +9,7 @@ function Main({ handleEditAvatarClick, handleEditProfileClick, handleAddPlaceCli
             <button
               className="profile__avatar-button"
               type="button"
-              onClick={handleEditAvatarClick}>
+              onClick={onEditAvatar}>
                 <img className="profile__avatar-pen" alt="карандаш" src={editAvatar} />
             </button>
           </div>
@@ -20,7 +20,7 @@ function Main({ handleEditAvatarClick, handleEditProfileClick, handleAddPlaceCli
                 className="button profile__edit-button" 
                 type="button" 
                 aria-label="редактировать профиль"
-                onClick={handleEditProfileClick}
+                onClick={onEditProfile}
               />
             </div>
             <p className="profile__profession">Исследователь океана</p>
@@ -30,7 +30,7 @@ function Main({ handleEditAvatarClick, handleEditProfileClick, handleAddPlaceCli
             className="button profile__add-button" 
             type="button" 
             aria-label="добавить фото" 
-            onClick={handleAddPlaceClick}
+            onClick={onAddPlace}
           />
       </section>
       <section className="elements">
