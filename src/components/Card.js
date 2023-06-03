@@ -1,10 +1,10 @@
-function Card({ card, onCardClick }) {
+function Card({ card, cardId, onCardClick }) {
   function handleClick() {
     onCardClick(card);
   }
   return (
     <>
-      <article className="element" key={card.cardId}>
+      <article className="element" key={cardId}>
         <button className="button element__basket" type="button" />
         <img
           className="element__image"

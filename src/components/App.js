@@ -49,6 +49,7 @@ function App() {
         name={"edit"}
         isOpen={isEditProfilePopupOpen}
         onClose={closeAllPopups}
+        buttonTitle={"Сохранить"}
       >
         <input
           type="text"
@@ -72,18 +73,13 @@ function App() {
           required
         />
         <span className="popup__input-error input-job-error popup__input-error_type_job" />
-        <button
-          className="button popup__button popup-edit__button"
-          type="submit"
-        >
-          Сохранить
-        </button>
       </PopupWithForm>
       <PopupWithForm
         title={"Новое место"}
         name={"add"}
         isOpen={isAddPlacePopupOpen}
         onClose={closeAllPopups}
+        buttonTitle={"Создать"}
       >
         <input
           type="text"
@@ -105,30 +101,18 @@ function App() {
           required
         />
         <span className="popup__input-error input-link-error popup__input-error_type_link" />
-        <button
-          className="button popup__button popup-add__button"
-          type="submit"
-        >
-          Создать
-        </button>
       </PopupWithForm>
       <PopupWithForm
         title={"Вы уверены?"}
         name={"confirm"}
-        //isOpen={}
-      >
-        <button
-          className="button popup__button popup-confirm__button"
-          type="submit"
-        >
-          Да
-        </button>
-      </PopupWithForm>
+        buttonTitle={"Да"}
+      ></PopupWithForm>
       <PopupWithForm
         title={"Обновить аватар"}
         name={"avatar"}
         isOpen={isEditAvatarPopupOpen}
         onClose={closeAllPopups}
+        buttonTitle={"Сохранить"}
       >
         <input
           type="url"
@@ -139,12 +123,6 @@ function App() {
           required
         />
         <span className="popup__input-error input-avatar-error popup__input-error_type_avatar" />
-        <button
-          className="button popup__button popup-avatar__button"
-          type="submit"
-        >
-          Сохранить
-        </button>
       </PopupWithForm>
       <ImagePopup card={selectedCard} onClose={closeAllPopups}></ImagePopup>
     </div>

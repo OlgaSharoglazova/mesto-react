@@ -24,6 +24,7 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
         setCards(
           userCards.map((card) => ({
             card: card,
+            cardId: card._id
           }))
         );
       })
@@ -73,7 +74,7 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
       </section>
       <section className="elements">
         {userCards.map(({ card }) => (
-          <Card card={card} onCardClick={onCardClick} />
+          <Card card={card} onCardClick={onCardClick} key={card._id} />
         ))}
       </section>
     </main>
@@ -81,12 +82,3 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
 }
 
 export default Main;
-
-// {cards.map((card) => (
-//   <Card
-//    name={card.name}
-//    link={card.link}
-//    key={card.cardId}
-//    onCardClick={onCardClick}
-//   />
-// ))}
