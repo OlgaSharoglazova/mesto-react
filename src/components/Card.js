@@ -1,11 +1,18 @@
+import React from "react";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 function Card({ card, cardId, onCardClick }) {
   function handleClick() {
     onCardClick(card);
   }
+  function handleDeleteClick() {
+    console.log('del');
+  }
+  const currentUser = React.useContext(CurrentUserContext);
+  const isOwn = card.owner._id === currentUser._id;
   return (
     <>
       <article className="element" key={cardId}>
-        <button className="button element__basket" type="button" />
+      {isOwn && <button className="button element__basket" type="button" onClick={handleDeleteClick} />} 
         <img
           className="element__image"
           src={card.link}
