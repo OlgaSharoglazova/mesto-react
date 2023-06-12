@@ -4,23 +4,8 @@ import React from "react";
 import Card from "./Card";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
-function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
-  const [userCards, setCards] = React.useState([]);
+function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, onCardLike, onCardDelete, cards }) {
   const currentUser = React.useContext(CurrentUserContext);
-
-  React.useEffect(() => {
-    api
-      .getInitialCards(userCards)
-      .then((userCards) => {
-        setCards(
-          userCards.map((card) => ({
-            card: card,
-            cardId: card._id,
-          }))
-        );
-      })
-      .catch((err) => console.log(`Ошибка: ${err}`));
-  }, []);
 
   return (
     <main className="main">
@@ -64,8 +49,8 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
         />
       </section>
       <section className="elements">
-        {userCards.map(({ card }) => (
-          <Card card={card} onCardClick={onCardClick} key={card._id} />
+        {cards.map(({ card }) => (
+          <Card card={card} onCardClick={onCardClick} onCardLike={onCardLike} onCardDelete={onCardDelete} key={card._id} />
         ))}
       </section>
     </main>
