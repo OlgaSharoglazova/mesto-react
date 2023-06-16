@@ -4,6 +4,7 @@ import Main from "./Main.js";
 import Footer from "./Footer.js";
 import PopupWithForm from "./PopupWithForm";
 import EditProfilePopup from "./EditProfilePopup.js";
+import EditAvatarPopup from "./EditAvatarPopup.js";
 import ImagePopup from "./ImagePopup";
 import { api } from "../utils/api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
@@ -38,6 +39,18 @@ function App() {
       .catch((err) => console.log(`Ошибка: ${err}`));
   }, []);
 
+  function handleUpdateAvatar(data) {
+    api
+      .changeAvatar(data)
+      .then((newData) => {
+        setСurrentUser(newData);
+      })
+      .then(() => {
+        closeAllPopups();
+      })
+      .catch((err) => console.log(`Ошибка: ${err}`));
+  }
+
   function handleCardClick(selectedCard) {
     setselectedCard(selectedCard);
   }
@@ -58,6 +71,18 @@ function App() {
     });
   }
 
+  function handleUpdateUser(dataUser) {
+    api
+      .editProfile(dataUser)
+      .then((newData) => {
+        setСurrentUser(newData);
+      })
+      .then(() => {
+        closeAllPopups();
+      })
+      .catch((err) => console.log(`Ошибка: ${err}`));
+  }
+
   function handleEditProfileClick() {
     setisEditProfilePopupOpen(true);
   }
@@ -72,18 +97,6 @@ function App() {
     setisAddPlacePopupOpen(false);
     setisEditAvatarPopupOpen(false);
     setselectedCard(null);
-  }
-
-  function handleUpdateUser(dataUser) {
-    api
-      .editProfile(dataUser)
-      .then((newData) => {
-        setСurrentUser(newData);
-      })
-      .then(() => {
-        closeAllPopups();
-      })
-      .catch((err) => console.log(`Ошибка: ${err}`));
   }
 
   return (
@@ -140,23 +153,11 @@ function App() {
           name={"confirm"}
           buttonTitle={"Да"}
         ></PopupWithForm>
-        <PopupWithForm
-          title={"Обновить аватар"}
-          name={"avatar"}
+        <EditAvatarPopup
           isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
-          buttonTitle={"Сохранить"}
-        >
-          <input
-            type="url"
-            id="input-avatar"
-            className="input popup__input popup__input-avatar"
-            placeholder="https://somewebsite.com/someimage.jpg"
-            name="avatar"
-            required
-          />
-          <span className="popup__input-error input-avatar-error popup__input-error_type_avatar" />
-        </PopupWithForm>
+          onUpdateAvatar={handleUpdateAvatar}
+        />
         <ImagePopup card={selectedCard} onClose={closeAllPopups}></ImagePopup>
       </div>
     </CurrentUserContext.Provider>

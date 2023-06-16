@@ -6,91 +6,104 @@ class Api {
 
   getProfile() {
     return fetch(`${this._baseUrl}/users/me`, {
-      headers: this._headers
+      headers: this._headers,
     })
-      .then(res => res.ok ? res.json() : Promise.reject(res.status))
-      .catch(console.log)
+      .then((res) => (res.ok ? res.json() : Promise.reject(res.status)))
+      .catch(console.log);
   }
 
   getInitialCards() {
     return fetch(`${this._baseUrl}/cards`, {
-      headers: this._headers
+      headers: this._headers,
     })
-    .then(res => res.ok ? res.json() : Promise.reject(res.status))
-    .catch(console.log)
+      .then((res) => (res.ok ? res.json() : Promise.reject(res.status)))
+      .catch(console.log);
   }
 
   editProfile(dataUser) {
     return fetch(`${this._baseUrl}/users/me`, {
-      method: 'PATCH',
+      method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({
         name: `${dataUser.name}`,
-        about: `${dataUser.about}`
-      })
+        about: `${dataUser.about}`,
+      }),
     })
-    .then(res => res.ok ? res.json() : Promise.reject(res.status))
-    .catch(console.log)
-
-  }  
+      .then((res) => (res.ok ? res.json() : Promise.reject(res.status)))
+      .catch(console.log);
+  }
 
   addCard(data) {
     return fetch(`${this._baseUrl}/cards`, {
-      method: 'POST',
-      headers:  this._headers,
-      body: JSON.stringify(data)
+      method: "POST",
+      headers: this._headers,
+      body: JSON.stringify(data),
     })
-    .then(res => res.ok ? res.json() : Promise.reject(res.status))
-    .catch(console.log)
+      .then((res) => (res.ok ? res.json() : Promise.reject(res.status)))
+      .catch(console.log);
   }
 
   deleteCard(id) {
     return fetch(`${this._baseUrl}/cards/${id}`, {
-      method: 'DELETE',
+      method: "DELETE",
       headers: this._headers,
     })
-    .then(res => res.ok ? res.json() : Promise.reject(res.status))
-    .catch(console.log)
+      .then((res) => (res.ok ? res.json() : Promise.reject(res.status)))
+      .catch(console.log);
   }
 
-  deleteLike(id) {
-    return fetch(`${this._baseUrl}/cards/${id}/likes`, {
-      method: 'DELETE',
-      headers: this._headers,
-    })
-    .then(res => res.ok ? res.json() : Promise.reject(res.status))
-    .catch(console.log)
-  }
+  //deleteLike(id) {
+  // return fetch(`${this._baseUrl}/cards/${id}/likes`, {
+  //   method: 'DELETE',
+  //   headers: this._headers,
+  // })
+  // .then(res => res.ok ? res.json() : Promise.reject(res.status))
+  // .catch(console.log)
+  //}
 
-  addLike(id) {
-    return fetch(`${this._baseUrl}/cards/${id}/likes`, {
-      method: 'PUT',
-      headers: this._headers,
-    })
-    .then(res => res.ok ? res.json() : Promise.reject(res.status))
-    .catch(console.log)
-  }
+  // addLike(id) {
+  //   return fetch(`${this._baseUrl}/cards/${id}/likes`, {
+  //     method: 'PUT',
+  //    headers: this._headers,
+  ////   })
+  //   .then(res => res.ok ? res.json() : Promise.reject(res.status))
+  //    .catch(console.log)
+  // }
 
   changeLikeCardStatus(id, isLiked) {
-    return isLiked ? this.addLike(id) : this.deleteLike(id)
+    if (isLiked) {
+      return fetch(`${this._baseUrl}/cards/${id}/likes`, {
+        method: "PUT",
+        headers: this._headers,
+      })
+        .then((res) => (res.ok ? res.json() : Promise.reject(res.status)))
+        .catch(console.log);
+    } else {
+      return fetch(`${this._baseUrl}/cards/${id}/likes`, {
+        method: "DELETE",
+        headers: this._headers,
+      })
+        .then((res) => (res.ok ? res.json() : Promise.reject(res.status)))
+        .catch(console.log);
+    }
   }
 
   changeAvatar(avatar) {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
-      method: 'PATCH',
+      method: "PATCH",
       headers: this._headers,
-      body: JSON.stringify(avatar)
+      body: JSON.stringify(avatar),
     })
-    .then(res => res.ok ? res.json() : Promise.reject(res.status))
-    .catch(console.log)
+      .then((res) => (res.ok ? res.json() : Promise.reject(res.status)))
+      .catch(console.log);
   }
   // другие методы работы с API
 }
 
 export const api = new Api({
-  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-65',
+  baseUrl: "https://mesto.nomoreparties.co/v1/cohort-65",
   headers: {
-    authorization: 'ae0200de-db36-4a97-9eb4-cce8d45d513f',
-    'Content-Type': 'application/json'
-  }
-}); 
+    authorization: "ae0200de-db36-4a97-9eb4-cce8d45d513f",
+    "Content-Type": "application/json",
+  },
+});
