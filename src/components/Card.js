@@ -10,7 +10,7 @@ function Card({ card, cardId, onCardClick, onCardLike, onCardDelete }) {
     onCardClick(card);
   }
   function handleDeleteClick() {
-    onCardDelete(cardId);
+    onCardDelete(card);
   }
   function handleLikeClick() {
     onCardLike(card);
