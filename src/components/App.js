@@ -38,7 +38,7 @@ function App() {
         );
       })
       .catch((err) => console.log(`Ошибка: ${err}`));
-  }, []);
+  }, [cards]);
 
   function handleUpdateAvatar(data) {
     api

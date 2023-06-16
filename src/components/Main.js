@@ -14,6 +14,7 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, onCardLike
             <img
               className="profile__avatar-img"
               src={currentUser.avatar}
+              alt="аватар"
             />
             <button
               className="profile__avatar-button"
