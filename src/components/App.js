@@ -5,6 +5,7 @@ import Footer from "./Footer.js";
 import PopupWithForm from "./PopupWithForm";
 import EditProfilePopup from "./EditProfilePopup.js";
 import EditAvatarPopup from "./EditAvatarPopup.js";
+import AddPlacePopup from "./AddPlacePopup.js";
 import ImagePopup from "./ImagePopup";
 import { api } from "../utils/api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
@@ -83,6 +84,17 @@ function App() {
       .catch((err) => console.log(`Ошибка: ${err}`));
   }
 
+  function handleAddPlaceSubmit(data) {
+    api.addCard(data)
+    .then((newCard) => {
+      setCards([newCard, ...cards]); 
+    })
+    .then(() => {
+      closeAllPopups();
+    })
+    .catch((err) => console.log(`Ошибка: ${err}`));
+  }
+
   function handleEditProfileClick() {
     setisEditProfilePopupOpen(true);
   }
@@ -120,34 +132,9 @@ function App() {
           onClose={closeAllPopups}
           onUpdateUser={handleUpdateUser}
         />
-        <PopupWithForm
-          title={"Новое место"}
-          name={"add"}
-          isOpen={isAddPlacePopupOpen}
+        <AddPlacePopup isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
-          buttonTitle={"Создать"}
-        >
-          <input
-            type="text"
-            id="input-title"
-            className="input popup__input popup-add__input popup__input-title"
-            placeholder="Название"
-            name="name"
-            minLength={2}
-            maxLength={30}
-            required
-          />
-          <span className="popup__input-error input-title-error popup__input-error_type_title " />
-          <input
-            type="url"
-            id="input-link"
-            className="input popup__input popup__input-link"
-            placeholder="Ссылка на картинку"
-            name="link"
-            required
-          />
-          <span className="popup__input-error input-link-error popup__input-error_type_link" />
-        </PopupWithForm>
+          onAddPlace={handleAddPlaceSubmit}/>
         <PopupWithForm
           title={"Вы уверены?"}
           name={"confirm"}

@@ -1,5 +1,4 @@
 import editAvatar from "../images/pencil.svg";
-import { api } from "../utils/api";
 import React from "react";
 import Card from "./Card";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
@@ -14,7 +13,7 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, onCardLike
           <div className="profile__avatar">
             <img
               className="profile__avatar-img"
-              style={{ backgroundImage: `url(${currentUser.avatar})` }}
+              src={currentUser.avatar}
             />
             <button
               className="profile__avatar-button"
