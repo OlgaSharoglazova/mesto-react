@@ -21,33 +21,38 @@ function App() {
   const [cards, setCards] = React.useState([]);
 
   React.useEffect(() => {
+    getInfoUser();
+    getCards();
+  }, []);
+
+  function getInfoUser() {
     api
       .getProfile()
       .then((dataUser) => {
         setСurrentUser(dataUser);
       })
       .catch((err) => console.log(`Ошибка: ${err}`));
+  }
+
+  function getCards() {
     api
       .getInitialCards(cards)
       .then((cards) => {
-        getCards(cards);
+        setCards(
+          cards.map((card) => ({
+            card: card,
+            cardId: card._id,
+          }))
+        );
       })
       .catch((err) => console.log(`Ошибка: ${err}`));
-  }, []);
-
-  function getCards(cards) {
-    setCards(
-      cards.map((card) => ({
-        card: card,
-        cardId: card._id,
-      }))
-    );
   }
+
   function handleAddPlaceSubmit(data) {
     api
       .addCard(data)
       .then((newCard) => {
-        setCards([newCard, ...cards]);
+        getCards([newCard, ...cards]);
       })
       .then(() => {
         closeAllPopups();
@@ -61,7 +66,7 @@ function App() {
 
     // Отправляем запрос в API и получаем обновлённые данные карточки
     api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
-      setCards((state) => state.map((c) => (c._id === card._id ? newCard : c)));
+      getCards((state) => state.map((c) => (c._id === card._id ? newCard : c)));
     });
   }
 
@@ -84,7 +89,7 @@ function App() {
   function handleCardDelete(card) {
     api.deleteCard(card._id).then(() => {
       const newCards = cards.filter((c) => c._id !== card._id);
-      setCards(newCards);
+      getCards(newCards);
     });
   }
 
