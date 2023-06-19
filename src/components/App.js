@@ -30,15 +30,40 @@ function App() {
     api
       .getInitialCards(cards)
       .then((cards) => {
-        setCards(
-          cards.map((card) => ({
-            card: card,
-            cardId: card._id,
-          }))
-        );
+        getCards(cards);
       })
       .catch((err) => console.log(`Ошибка: ${err}`));
-  }, [cards]);
+  }, []);
+
+  function getCards(cards) {
+    setCards(
+      cards.map((card) => ({
+        card: card,
+        cardId: card._id,
+      }))
+    );
+  }
+  function handleAddPlaceSubmit(data) {
+    api
+      .addCard(data)
+      .then((newCard) => {
+        setCards([newCard, ...cards]);
+      })
+      .then(() => {
+        closeAllPopups();
+      })
+      .catch((err) => console.log(`Ошибка: ${err}`));
+  }
+
+  function handleCardLike(card) {
+    // Снова проверяем, есть ли уже лайк на этой карточке
+    const isLiked = card.likes.some((i) => i._id === currentUser._id);
+
+    // Отправляем запрос в API и получаем обновлённые данные карточки
+    api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
+      setCards((state) => state.map((c) => (c._id === card._id ? newCard : c)));
+    });
+  }
 
   function handleUpdateAvatar(data) {
     api
@@ -54,15 +79,6 @@ function App() {
 
   function handleCardClick(selectedCard) {
     setselectedCard(selectedCard);
-  }
-  function handleCardLike(card) {
-    // Снова проверяем, есть ли уже лайк на этой карточке
-    const isLiked = card.likes.some((i) => i._id === currentUser._id);
-
-    // Отправляем запрос в API и получаем обновлённые данные карточки
-    api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
-      setCards((state) => state.map((c) => (c._id === card._id ? newCard : c)));
-    });
   }
 
   function handleCardDelete(card) {
@@ -82,17 +98,6 @@ function App() {
         closeAllPopups();
       })
       .catch((err) => console.log(`Ошибка: ${err}`));
-  }
-
-  function handleAddPlaceSubmit(data) {
-    api.addCard(data)
-    .then((newCard) => {
-      setCards([newCard, ...cards]); 
-    })
-    .then(() => {
-      closeAllPopups();
-    })
-    .catch((err) => console.log(`Ошибка: ${err}`));
   }
 
   function handleEditProfileClick() {
@@ -132,9 +137,11 @@ function App() {
           onClose={closeAllPopups}
           onUpdateUser={handleUpdateUser}
         />
-        <AddPlacePopup isOpen={isAddPlacePopupOpen}
+        <AddPlacePopup
+          isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
-          onAddPlace={handleAddPlaceSubmit}/>
+          onAddPlace={handleAddPlaceSubmit}
+        />
         <PopupWithForm
           title={"Вы уверены?"}
           name={"confirm"}

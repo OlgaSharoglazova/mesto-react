@@ -33,11 +33,11 @@ class Api {
       .catch(console.log);
   }
 
-  addCard(data) {
+  addCard(dataCard) {
     return fetch(`${this._baseUrl}/cards`, {
       method: "POST",
       headers: this._headers,
-      body: JSON.stringify(data),
+      body: JSON.stringify(dataCard),
     })
       .then((res) => (res.ok ? res.json() : Promise.reject(res.status)))
       .catch(console.log);
