@@ -43,7 +43,7 @@ function Card({ card, cardId, onCardClick, onCardLike, onCardDelete }) {
               aria-label="нравится"
               onClick={handleLikeClick}
             ></button>
-            <span className="element__counter"></span>
+            <span className="element__counter">{card.likes.length}</span>
           </div>
         </div>
       </article>
