@@ -65,9 +65,14 @@ function App() {
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
 
     // Отправляем запрос в API и получаем обновлённые данные карточки
-    api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
-      getCards((state) => state.map((c) => (c._id === card._id ? newCard : c)));
-    });
+    api
+      .changeLikeCardStatus(card._id, !isLiked)
+      .then((newCard) => {
+        getCards((state) =>
+          state.map((c) => (c._id === card._id ? newCard : c))
+        );
+      })
+      .catch((err) => console.log(`Ошибка: ${err}`));
   }
 
   function handleUpdateAvatar(data) {
@@ -87,10 +92,13 @@ function App() {
   }
 
   function handleCardDelete(card) {
-    api.deleteCard(card._id).then(() => {
-      const newCards = cards.filter((c) => c._id !== card._id);
-      getCards(newCards);
-    });
+    api
+      .deleteCard(card._id)
+      .then(() => {
+        const newCards = cards.filter((c) => c._id !== card._id);
+        getCards(newCards);
+      })
+      .catch((err) => console.log(`Ошибка: ${err}`));
   }
 
   function handleUpdateUser(dataUser) {
